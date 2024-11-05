@@ -34,8 +34,6 @@
       - nvidia-driver
       - firmware-misc-nonfree
     state: present
-  #environment:
-  #  DEBIAN_FRONTEND: noninteractive
   when: nvidia_check.rc == 0 and not nvidia_installed.changed
 
 
