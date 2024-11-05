@@ -1,6 +1,7 @@
 ---
-- name: Configure Linux host with the GNOME desktop environment 
+- name: Configure a Linux host specifically for the GNOME desktop environment 
   hosts: localhost
   become: true
   roles:
      - ../roles/nvidia
+     - ../roles/git-config
