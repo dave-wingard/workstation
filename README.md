@@ -7,4 +7,5 @@ apt update ; apt install -y git ansible
 git clone git@github.com:dave-wingard/workstation.git
 
 ### Run the Ansible playbook
+cd workstation
 ansible-playbook playbooks/gnome.yml
