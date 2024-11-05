@@ -18,7 +18,7 @@
   apt:
     name: linux-headers-amd64
     state: present
-  when: nvidia_check.rc == 0 and not nvidia_installed.changed
+  #when: nvidia_check.rc == 0 and not nvidia_installed.changed
 
 - name: Add NVIDIA repository
   ansible.builtin.apt_repository:
@@ -34,7 +34,10 @@
       - nvidia-driver
       - firmware-misc-nonfree
     state: present
-  when: nvidia_check.rc == 0 and not nvidia_installed.changed
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+  #when: nvidia_check.rc == 0 and not nvidia_installed.changed
+
 
 - name: Reboot if NVIDIA drivers were installed
   reboot:
