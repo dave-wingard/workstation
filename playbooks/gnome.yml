@@ -1,3 +1,4 @@
+---
 - name: Configure Linux host with the GNOME desktop environment 
   hosts: localhost
   become: true

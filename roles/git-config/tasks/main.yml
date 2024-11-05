@@ -1,0 +1,8 @@
+---
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: gitconfig
+    dest: /home/dave/.gitconfig
+    owner: dave
+    group: dave
+    mode: '0644'

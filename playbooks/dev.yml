@@ -1,0 +1,8 @@
+---
+# Adding this so I can test new roles as I create them instead
+# of commenting out my working playbooks.
+- name: Configure Linux host with the GNOME desktop environment 
+  hosts: localhost
+  become: true
+  roles:
+     - ../roles/git-config
