@@ -12,6 +12,7 @@ check_not_root() {
 sudo apt update ; sudo apt install -y git ansible rsync
 
 ### Copy ssh keys
+check_not_root
 rsync dave@nas01:~/setup/id_rsa* ~/
 mkdir ~/.ssh
 mv id_rsa* ~/.ssh
