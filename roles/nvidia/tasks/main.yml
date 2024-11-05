@@ -1,0 +1,41 @@
+---
+- name: Check for NVIDIA hardware
+  shell: lspci | grep -i 'nvidia'
+  register: nvidia_check
+  changed_when: false
+  failed_when: false
+  ignore_errors: true
+
+- name: Check if NVIDIA driver is already installed
+  apt:
+    name: nvidia-driver
+    state: present
+  check_mode: yes
+  register: nvidia_installed
+  when: nvidia_check.rc == 0
+
+- name: Install necessary kernel headers
+  apt:
+    name: linux-headers-amd64
+    state: present
+  when: nvidia_check.rc == 0 and not nvidia_installed.changed
+
+- name: Add NVIDIA repository
+  ansible.builtin.apt_repository:
+    repo: "deb http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware"
+    state: present
+    filename: nvidia
+  when: nvidia_check.rc == 0 and not nvidia_installed.changed
+
+- name: Install NVIDIA driver and firmware
+  apt:
+    update_cache: yes
+    name:
+      - nvidia-driver
+      - firmware-misc-nonfree
+    state: present
+  when: nvidia_check.rc == 0 and not nvidia_installed.changed
+
+- name: Reboot if NVIDIA drivers were installed
+  reboot:
+  when: nvidia_check.rc == 0 and not nvidia_installed.changed
