@@ -1,11 +1,7 @@
-# workstation
+# Workstation setup steps
 
-### Install base packages
-apt update ; apt install -y git ansible
+Run the following to setup a new Debian host
 
-### Clone this repo
-git clone git@github.com:dave-wingard/workstation.git
-
-### Run the Ansible playbook
-cd workstation
-ansible-playbook playbooks/gnome.yml
+```
+wget https://raw.githubusercontent.com/dave-wingard/workstation/main/bootstrap.sh | bash
+```
