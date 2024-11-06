@@ -5,3 +5,4 @@
   roles:
      - ../roles/nvidia
      - ../roles/git-config
+     - ../roles/obsidian

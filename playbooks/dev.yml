@@ -5,4 +5,4 @@
   hosts: localhost
   become: true
   roles:
-     - ../roles/git-config
+     - ../roles/obsidian

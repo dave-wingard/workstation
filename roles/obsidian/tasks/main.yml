@@ -1,0 +1,37 @@
+---
+- name: Check if Obsidian is installed
+  shell: 'dpkg -s obsidian | grep Version | cut -d" " -f2'
+  register: installed_version
+  ignore_errors: true
+
+- name: Get latest version from GitHub releases
+  uri:
+    url: "https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest"
+    return_content: yes
+  register: release_info
+
+- name: Extract latest version tag from GitHub
+  set_fact:
+    latest_version: "{{ release_info.content | from_json | json_query('tag_name') | regex_replace('^v', '') }}"
+
+- name: Compare installed and latest version
+  debug:
+    msg: "Installed version: {{ installed_version.stdout }}, Latest version: {{ latest_version }}"
+
+- name: Download the latest Obsidian .deb file
+  when: installed_version.stdout != latest_version
+  get_url:
+    url: "https://github.com/obsidianmd/obsidian-releases/releases/download/v{{ latest_version }}/obsidian_{{ latest_version }}_amd64.deb"
+    dest: "/tmp/obsidian_{{ latest_version }}_amd64.deb"
+
+- name: Install the downloaded Obsidian .deb file
+  when: installed_version.stdout != latest_version
+  apt:
+    deb: "/tmp/obsidian_{{ latest_version }}_amd64.deb"
+    update_cache: yes
+
+- name: Clean up the downloaded .deb file
+  when: installed_version.stdout != latest_version
+  file:
+    path: "/tmp/obsidian_{{ latest_version }}_amd64.deb"
+    state: absent
