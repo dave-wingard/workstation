@@ -1,0 +1,21 @@
+---
+- name: import the VSCodium apt key
+  apt_key:
+    url: https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg
+    keyring: /usr/share/keyrings/vscodium-archive-keyring.gpg
+    state: present
+
+- name: Add the VSCodium repo
+  apt_repository:
+    filename: vscode
+    repo: 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main'
+    update_cache: no
+    state: present
+    # The new repo will be in /etc/apt/sources.list.d
+
+- name: Add apt packages
+  apt:
+    update_cache: yes
+    name:
+      - codium
+    state: present

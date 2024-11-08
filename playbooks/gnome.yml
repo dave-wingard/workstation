@@ -6,3 +6,4 @@
      - ../roles/nvidia
      - ../roles/git-config
      - ../roles/obsidian
+     - ../roles/codium #Free/Libre Open Source Software Binaries of VS Code
