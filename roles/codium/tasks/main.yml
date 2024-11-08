@@ -7,7 +7,7 @@
 
 - name: Add the VSCodium repo
   apt_repository:
-    filename: vscode
+    filename: codium
     repo: 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main'
     update_cache: no
     state: present
