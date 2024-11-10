@@ -1,0 +1,21 @@
+---
+- name: import the Spotify apt key
+  apt_key:
+    url: https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg
+    keyring: /usr/share/keyrings/spotify.gpg
+    state: present
+
+- name: Add the Spotify repo
+  apt_repository:
+    filename: spotify
+    repo: 'deb [signed-by=/usr/share/keyrings/spotify.gpg] http://repository.spotify.com stable non-free'
+    update_cache: no
+    state: present
+    # The new repo will be in /etc/apt/sources.list.d
+
+- name: Add apt packages
+  apt:
+    update_cache: yes
+    name:
+      - spotify-client
+    state: present
